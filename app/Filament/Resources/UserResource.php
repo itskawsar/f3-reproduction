@@ -51,6 +51,19 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),
+                Tables\Columns\ToggleColumn::make('email_verified_at')
+                    ->beforeStateUpdated(function ($record, $state) {
+                        // Runs before the state is saved to the database.
+                        // return $state?date('Y-m-d H:i:s'):'0000-00-00 00:00:00';
+                        return $state?date('Y-m-d H:i:s'):null;
+                    })
+                    ->label('Verified'),
+                Tables\Columns\ToggleColumn::make('is_admin')
+                    ->label('Admin')
+                    ->beforeStateUpdated(function ($record, $state) {
+                        return $state?5:6;
+                    }),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
